@@ -1,0 +1,79 @@
+*{
+    font-family:Arial, Helvetica, sans-serif;
+}
+form {
+    margin: auto;
+    max-width: 600px;
+    padding:10px
+}
+label {
+    color:rgb(66, 66, 66);
+    font-size: 15px;
+    font-weight: 500;
+}
+input, textarea, select {
+    margin-bottom: 10px;
+    border-radius: 3px;
+    border: 1px solid grey;
+    line-height: 30px;
+    font-size: 18px;
+    color:rgb(66, 66, 66);
+    width: 100%;
+}
+textarea {
+    max-width: 100%;
+    min-height: 30px;
+}
+input[type=file] {
+    border: none;
+    font-size: inherit;
+    line-height: inherit;
+}
+input[type=checkbox] {
+    width: inherit;
+}
+.page-title {
+    text-align: center;
+}
+.button-layout {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.button {
+    margin: 5px 10px;
+    min-height: 35px;
+    width: 40%;
+    min-width:100px;
+    max-width: 150px;
+    border-radius: 3px;
+    font-size: 15px;
+    border: 1px solid grey;
+}
+.button:hover {
+    cursor: pointer;
+}
+.btn-submit {
+    background-color: rgb(40, 158, 40);
+    color:white;
+    border: none;
+}
+.custom-input-layout {
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+}
+.inline {
+    margin-right: 15px;
+    margin-bottom: 0;
+}
+.custom-input-button {
+    text-decoration: none;
+    border: 1px solid rgb(66, 66, 66);
+    border-radius: 3px;
+    padding: 10px 15px;
+}
+.custom-input-button:hover {
+    cursor: pointer;
+}
