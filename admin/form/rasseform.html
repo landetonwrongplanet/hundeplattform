@@ -10,7 +10,7 @@
 <script src="/js/formjs.js"></script>
 <body>
     <h1 class="page-title">Hunderasse Formular</h1>
-    <form action="/admin-view/rasseform.html" method="post" id="rasse-form">
+    <form action="/admin/form/rasseform.html" method="post" id="rasse-form">
         <label for="bezeichnung">Bezeichnung</label><br>
         <input type="text" name="bezeichnung" id="bezeichnung"><br>
         <label for="lebenserwartung">Lebenserwartung</label><br>
@@ -78,7 +78,7 @@
         </div>
         <div class="button-layout">
             <button class="button btn-submit" type="submit" id="submit">Absenden</button>
-            <button class="button" id="cancel">Abbrechen</button>
+            <a href="/admin/list/rasselist.html"><button type="button" class="button" >Abbrechen</button></a>
         </div>
     </form>
 </body>

@@ -8,7 +8,7 @@ form {
 }
 label {
     color:rgb(66, 66, 66);
-    font-size: 15px;
+    font-size: 1.1em;
     font-weight: 500;
 }
 input, textarea, select {
@@ -16,7 +16,7 @@ input, textarea, select {
     border-radius: 3px;
     border: 1px solid grey;
     line-height: 30px;
-    font-size: 18px;
+    font-size: 1.2em;
     color:rgb(66, 66, 66);
     width: 100%;
 }
@@ -44,18 +44,17 @@ input[type=checkbox] {
 .button {
     margin: 5px 10px;
     min-height: 35px;
-    width: 40%;
     min-width:100px;
     max-width: 150px;
     border-radius: 3px;
-    font-size: 15px;
+    font-size: 1em;
     border: 1px solid grey;
 }
 .button:hover {
     cursor: pointer;
 }
 .btn-submit {
-    background-color: rgb(40, 158, 40);
+    background-color: rgb(40, 160, 40);
     color:white;
     border: none;
 }
