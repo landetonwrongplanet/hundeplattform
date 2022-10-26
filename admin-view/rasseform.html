@@ -35,14 +35,13 @@
         <textarea rows="2" name="zu-achten-auf" form="rasse-form"></textarea><br>
         <label for="bild">Bild</label><br>
         <input type="file" name="bild" id="bild"><br>
-        <label for="gruppe">Gruppe (prototype)</label><br>
-        <input list="gruppen" name="gruppe" id="gruppe"><br>
-        <datalist id="gruppen">
-            <option value="Hütehunde und Treibhunde">
-            <option value="Pinscher, Schnauzer, Molosser und Schweizer Sennenhunde">
-            <option value="Terrier">
-            <option value="etc...">
-        </datalist>
+        <label for="gruppe">Gruppe</label><br>
+        <select name="gruppe" id="gruppe">
+            <option value="1">Hütehunde und Treibhunde</option>
+            <option value="2">Pinscher, Schnauzer, Molosser und Schweizer Sennenhunde</option>
+            <option value="3">Terrier</option>
+            <option value="4">etc...</option>
+        </select><br>
         <label for="charakter">Charakter</label><br>
         <select name="charakter" id="charakter" multiple>
             <option value="freundlich">Freundlich</option>
