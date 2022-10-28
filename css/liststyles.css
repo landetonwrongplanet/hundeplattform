@@ -2,10 +2,8 @@
     font-family:Arial, Helvetica, sans-serif;
 }
 table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    border: none !important;
+    width: 100%;
+    margin: auto;
 }
 table, th, td {
     border: 1px solid grey;
@@ -47,4 +45,10 @@ th {
     background-color: rgb(240, 60, 60);
     border: none;
     color: white;
+}
+.table-wrapper {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    border: none !important;
 }
