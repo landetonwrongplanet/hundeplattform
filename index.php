@@ -36,8 +36,25 @@
       </div>
       </div>
         <div class="login">
-        <div data-role="main" class="ui-content">
+        <div data-role="main">
           <p>Login</p>
+          <form data-ajax="false" id="loginformular" method="post"
+              action="index.php#login">
+              <div data-role="fieldcontain">
+                <fieldset>
+                  <label for="username">Benutzername</label>
+                  <input type="text" name="username" id="username" focus><br>
+                  <label for="password">Kennwort</label>
+                  <input type="password" name="password" id="password"><br>
+                  <input type="submit" value="login">
+                </fieldset>
+              </div>
+          </form>
+        </div>
+        </div>
+        <div class="login">
+        <div data-role="main">
+          <p>Admin</p>
           <form data-ajax="false" id="loginformular" method="post"
               action="index.php#login">
               <div data-role="fieldcontain">
@@ -66,7 +83,7 @@
 </div>
 <div class="footer">
   <p>Author: Beth Williams, Ilenia Castano</p>
-  <p><a href="">bwic@example.com</a></p>
+  
 </div>
   </div>
   </body>
