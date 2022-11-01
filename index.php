@@ -12,6 +12,7 @@
         <div class="logo"><img src="logo.jpeg" alt="Dog on computer" width="180" height="200" class="logo"></div>
         <div class="sitetitle"><p class="title">Hundeplattform</p></div>
       </div>
+      <div class="landing">
       <div class="forms">
         <div class="registration">
         <div data-role="main" class="ui-content">
@@ -52,6 +53,21 @@
         </div>
         </div>
     </div>
+    <div class="intro">
+      <p class="landingtext">
+        Hallo! Sie scheinen eine interessierte Hundeperson zu sein. 
+        Hier sind Sie auf jeden Fall am richtigen Ort. 
+        Nach der erfolgreichen Registrierung, 
+        können Sie sich einloggen um von unserem Datenbankservice vollumfänglich zu profitieren.
+        Sie können zu Hunderassen nachlesen, 
+        Bilder zu den jeweiligen Rassen ansehen und sich via Quiz die passende Rasse heraussuchen.
+      </p>
+    </div>
+</div>
+<div class="footer">
+  <p>Author: Beth Williams, Ilenia Castano</p>
+  <p><a href="">bwic@example.com</a></p>
+</div>
   </div>
   </body>
 </html>
