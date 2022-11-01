@@ -1,7 +1,10 @@
 .container{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color:lightblue;
     display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
 }
 
 .logo{
@@ -18,4 +21,8 @@
     align-items: center;
     margin-left: 20px;
     margin-right: 20px;
+}
+
+.forms{
+    width: 50%;
 }
