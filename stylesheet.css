@@ -1,0 +1,48 @@
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container{
+    background-color:lightblue;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin: 0%;
+    padding: 0%;
+}
+
+.logo{
+    border-radius: 50%;
+}
+
+.header{
+    display: flex;
+    font-size: 30px;
+    width: 100%;
+}
+.sitetitle{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.landing{
+    display: flex;
+    flex-direction: row;
+}
+
+.forms{
+    width: 50%;
+}
+.landingtext{
+    width: 600px;
+    margin: 25px;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
