@@ -1,24 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-	#Config for database and session (eventually outsource)
-
-	#Configuration details for the database connection
-	$db_user = "bsfh";
-	$pass = "151Mhfsb";
-	$host = "localhost";
-	$db = "hunde";
-	
-	#Connection stored here
-	$conn = mysqli_connect($host, $db_user, $pass, $db) or die("A connection could not be established.");
-	
-	session_start();
-	
-	if(isset($_SESSION["user"])) {
-		#do admin control
-	} else {
-		#redirect to login
-	}
+	include('../../config/config.php');
 ?>
 <head>
     <meta charset="UTF-8">
@@ -27,27 +10,39 @@
     <link rel="stylesheet" href="../../css/adminstyle.css">
     <title>Charakter Verwaltung</title>
 </head>
+<script src="../../js/adminscript.js"></script>
 <body>
-	<?php
-		echo "test";
-	?>
     <h1 class="page-title">Charakter Verwaltung</h1>
 
     <div class="button-layout">
-        <a href="../form/charakterform.php"><button type="button" class="button btn-primary">Hinzufügen</button></a>
-        <a href="../form/charakterform.php"><button type="button" class="button">Bearbeiten</button></a>
-        <button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
+		<form style="margin:0; padding:0" action="../form/charakterform.php" method="post">
+			<button type="submit" name="add" class="button btn-primary">Hinzufügen</button>
+			<button type="submit" name="edit" class="button">Bearbeiten</button>
+		</form>
+		<button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
 
     <div class="table-wrap">
         <table>
             <tr>
-                <th>Id</th>
+				<th style="width:0"></th>
+                <th style="width:0">Id</th>
                 <th>Bezeichnung</th>
             </tr>
-            <!--fetch rasse data with sql query-->
-            <!--create new row for each record-->
+			<?php
+				$query = "SELECT * FROM charakter";
+				$stmt = $conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				while ($row = $result->fetch_assoc()) {
+					echo "<tr onclick='select(" .$row['id'] .")'>";
+					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entity'></td>";
+					echo "<td>" .$row['id'] ."</td>";
+					echo "<td>" .$row['bezeichnung'] ."</td>";
+					echo "</tr>";
+				}
+			?>
         </table>
     </div>
 </body>

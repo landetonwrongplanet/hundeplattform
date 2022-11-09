@@ -14,6 +14,7 @@ th, td {
 }
 th {
     background-color: lightgrey;
+	text-align:left;
 }
 .page-title {
     text-align: center;
@@ -25,9 +26,9 @@ th {
     justify-content: center;
 }
 .button {
-    margin: 5px 10px;
+    margin: 5px;
     min-height: 35px;
-    min-width:100px;
+    min-width: 100px;
     max-width: 150px;
     border-radius: 3px;
     font-size: 1em;
@@ -114,4 +115,7 @@ input[type=checkbox] {
 }
 .link-list a:hover {
     text-decoration: underline;
+}
+.selected {
+	background-color: light-blue;
 }

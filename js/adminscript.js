@@ -54,3 +54,18 @@ function add_custom_fell() {
     document.getElementById('custom-fell').value = "";
     document.getElementById('rasse-form').doNotSubmit();
 }
+
+function select(id) {
+	var element = document.getElementById(id);
+	if (element.checked == true) {
+		element.classList.add('selected');
+	} else {
+		element.classList.remove('selected');
+	}
+	element.checked = !element.checked;
+	
+}
+
+function edit_entity() {
+	document.getElementById
+}

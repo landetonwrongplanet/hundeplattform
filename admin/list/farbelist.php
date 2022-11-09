@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+	include('../../config/config.php');
+?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,24 +10,39 @@
     <link rel="stylesheet" href="../../css/adminstyle.css">
     <title>Farbe Verwaltung</title>
 </head>
+<script src="../../js/adminscript.js"></script>
 <body>
     <h1 class="page-title">Farbe Verwaltung</h1>
 
     <div class="button-layout">
-        <a href="../form/farbeform.php"><button type="button" class="button btn-primary">Hinzufügen</button></a>
-        <a href="../form/farbeform.php"><button type="button" class="button">Bearbeiten</button></a>
-        <button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
+		<form style="margin:0; padding:0" action="../form/farbeform.php" method="post">
+			<button type="submit" name="add" class="button btn-primary">Hinzufügen</button>
+			<button type="submit" name="edit" class="button">Bearbeiten</button>
+		</form>
+		<button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
 
     <div class="table-wrapper">
         <table>
             <tr>
-                <th>Id</th>
+                <th style="width:0"></th>
+                <th style="width:0">Id</th>
                 <th>Bezeichnung</th>
             </tr>
-            <!--fetch rasse data with sql query-->
-            <!--create new row for each record-->
+			<?php
+				$query = "SELECT * FROM farbe";
+				$stmt = $conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				while ($row = $result->fetch_assoc()) {
+					echo "<tr onclick='select(" .$row['id'] .")'>";
+					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entity'></td>";
+					echo "<td>" .$row['id'] ."</td>";
+					echo "<td>" .$row['bezeichnung'] ."</td>";
+					echo "</tr>";
+				}
+			?>
         </table>
     </div>
 
