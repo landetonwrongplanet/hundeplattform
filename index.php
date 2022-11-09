@@ -1,3 +1,8 @@
+<?php
+/* session_start();
+$pdo = new PDO();
+*/
+?>
 <!DOCTYPE html>
 <html lang="de">
   <head>
@@ -18,17 +23,21 @@
         <div data-role="main" class="ui-content">
           <p>Registration</p>
           <form data-ajax="false" id="loginformular" method="post"
-              action="index.php#login">
+              action="/user.php">
               <div data-role="fieldcontain">
                 <fieldset>
                   <label for="surname">Vorname</label>
                   <input type="text" name="surname" id="s-name" focus><br>
                   <label for="lastname">Nachname</label>
-                  <input type="text" name="username" id="username" focus><br>
-                  <label for="username">Benutzername</label>
                   <input type="text" name="lastname" id="l-name" focus><br>
-                  <label for="kennwort">Kennwort</label>
-                  <input type="password" name="password" id="password"><br>
+                  <label for="username">Benutzername</label>
+                  <input type="text" name="username" id="username" focus><br>
+                  <label for="email">E-Mail</label>
+                  <input type="email" name="email" id="email" focus><br>
+                  <label for="password">Kennwort</label>
+                  <input type="password1" name="password1" id="password1"><br>
+                  <label for="password2">Kennwort wiederholen</label>
+                  <input type="password2" name="password2" id="password2"><br>
                   <input type="submit" value="register">
                 </fieldset>
               </div>
@@ -38,23 +47,6 @@
         <div class="login">
         <div data-role="main">
           <p>Login</p>
-          <form data-ajax="false" id="loginformular" method="post"
-              action="index.php#login">
-              <div data-role="fieldcontain">
-                <fieldset>
-                  <label for="username">Benutzername</label>
-                  <input type="text" name="username" id="username" focus><br>
-                  <label for="password">Kennwort</label>
-                  <input type="password" name="password" id="password"><br>
-                  <input type="submit" value="login">
-                </fieldset>
-              </div>
-          </form>
-        </div>
-        </div>
-        <div class="login">
-        <div data-role="main">
-          <p>Admin</p>
           <form data-ajax="false" id="loginformular" method="post"
               action="index.php#login">
               <div data-role="fieldcontain">
