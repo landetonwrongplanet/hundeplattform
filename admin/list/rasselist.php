@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/adminstyle.css">
-    <title>Farbe Verwaltung</title>
+    <title>Rasse Verwaltung</title>
 </head>
 <body>
-    <h1 class="page-title">Farbe Verwaltung</h1>
+    <h1 class="page-title">Rasse Verwaltung</h1>
 
     <div class="button-layout">
-        <a href="../form/farbeform.html"><button type="button" class="button btn-primary">Hinzufügen</button></a>
-        <a href="../form/farbeform.html"><button type="button" class="button">Bearbeiten</button></a>
+        <a href="../form/rasseform.php"><button type="button" class="button btn-primary">Hinzufügen</button></a>
+        <a href="../form/rasseform.php"><button type="button" class="button">Bearbeiten</button></a>
         <button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
@@ -22,11 +22,24 @@
             <tr>
                 <th>Id</th>
                 <th>Bezeichnung</th>
+                <th>Gruppe</th>
+                <th>Lebenserwartung</th>
+                <th>Min Gewicht</th>
+                <th>Max Gewicht</th>
+                <th>Min Widerrist</th>
+                <th>Max Widerrist</th>
+                <th>Herkunft</th>
+                <th>Arbeit</th>
+                <th>Sozial</th>
+                <!--
+                <th>Geschichte</th>
+                <th>Zu achten auf</th>
+                -->
+                <th>Bild</th>
             </tr>
             <!--fetch rasse data with sql query-->
             <!--create new row for each record-->
         </table>
     </div>
-
 </body>
 </html>

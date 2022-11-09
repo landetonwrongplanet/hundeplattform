@@ -9,14 +9,14 @@
 </head>
 <body>
     <h1 class="page-title">Rassengruppe Formular</h1>
-    <form action="../form/gruppeform.html" method="post" id="gruppe-form">
+    <form action="../form/gruppeform.php" method="post" id="gruppe-form">
         <label for="nummer">Gruppennummer</label>
         <input type="number" name="nummer" id="nummer"><br>
         <label for="bezeichnung">Bezeichnung</label><br>
         <input type="text" name="bezeichnung" id="bezeichnung"><br>
         <div class="button-layout">
             <button class="button btn-primary" type="submit" id="submit">Absenden</button>
-            <a href="../list/gruppelist.html"><button type="button" class="button">Abbrechen</button></a>
+            <a href="../list/gruppelist.php"><button type="button" class="button">Abbrechen</button></a>
         </div>
     </form>
 </body>

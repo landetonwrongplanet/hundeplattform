@@ -9,12 +9,12 @@
 </head>
 <body>
     <h1 class="page-title">Charakter Formular</h1>
-    <form action="../form/charakterform.html" method="post" id="charakter-form">
+    <form action="../form/charakterform.php" method="post" id="charakter-form">
         <label for="bezeichnung">Bezeichnung</label><br>
         <input type="text" name="bezeichnung" id="bezeichnung"><br>
         <div class="button-layout">
             <button class="button btn-primary" type="submit" id="submit">Absenden</button>
-            <a href="../list/charakterlist.html"><button type="button" class="button">Abbrechen</button></a>
+            <a href="../list/charakterlist.php"><button type="button" class="button">Abbrechen</button></a>
         </div>
     </form>
 </body>

@@ -11,8 +11,8 @@
     <h1 class="page-title">Fell Verwaltung</h1>
 
     <div class="button-layout">
-        <a href="../form/fellform.html"><button type="button" class="button btn-primary">Hinzufügen</button></a>
-        <a href="../form/fellform.html"><button type="button" class="button">Bearbeiten</button></a>
+        <a href="../form/fellform.php"><button type="button" class="button btn-primary">Hinzufügen</button></a>
+        <a href="../form/fellform.php"><button type="button" class="button">Bearbeiten</button></a>
         <button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
