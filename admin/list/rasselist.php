@@ -19,7 +19,7 @@
 			<button type="submit" name="add" class="button btn-primary">Hinzufügen</button>
 			<button type="submit" name="edit" class="button">Bearbeiten</button>
 		</form>
-		<button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
+		<button type="button" class="button btn-delete" onclick="delete_entry()">Löschen</button>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
 	
@@ -50,20 +50,20 @@
 				$result = $stmt->get_result();
 				while ($row = $result->fetch_assoc()) {
 					echo "<tr onclick='select(" .$row['id'] .")'>";
-					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entity'></td>";
+					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entry'></td>";
 					echo "<td>" .$row['id'] ."</td>";
-					echo "<td>" .$row['bezeichnung'] ."</td>";
+					echo "<td>" .utf8_encode($row['bezeichnung']) ."</td>";
 					echo "<td>" .$row['grp_bez'] ."</td>";
 					echo "<td>" .$row['lebenserwartung'] ."</td>";
 					echo "<td>" .$row['minimal_gewicht'] ."</td>";
 					echo "<td>" .$row['maximal_gewicht'] ."</td>";
 					echo "<td>" .$row['minimal_widerrist'] ."</td>";
 					echo "<td>" .$row['maximal_widerrist'] ."</td>";
-					echo "<td>" .$row['herkunft'] ."</td>";
+					echo "<td>" .utf8_encode($row['herkunft']) ."</td>";
 					echo "<td>" .($row['verwendung_arbeit'] ? 'true' : 'false') ."</td>";
 					echo "<td>" .($row['verwendung_sozial'] ? 'true' : 'false') ."</td>";
-					echo "<td>" .substr($row['geschichte'], 0, 50) .(strlen($row['geschichte']) > 50 ? '...' : '') ."</td>";
-					echo "<td>" .substr($row['zu_achten_auf'],0 , 50) .(strlen($row['zu_achten_auf']) > 50 ? '...' : '') ."</td>";
+					echo "<td>" .utf8_encode(substr($row['geschichte'], 0, 50)) .(strlen($row['geschichte']) > 50 ? '...' : '') ."</td>";
+					echo "<td>" .utf8_encode(substr($row['zu_achten_auf'],0 , 50)) .(strlen($row['zu_achten_auf']) > 50 ? '...' : '') ."</td>";
 					#TODO: display image
 					echo "<td>" /*.$row['bild']*/ ."</td>";
 					echo "</tr>";

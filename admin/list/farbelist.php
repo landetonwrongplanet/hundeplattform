@@ -19,7 +19,7 @@
 			<button type="submit" name="add" class="button btn-primary">Hinzufügen</button>
 			<button type="submit" name="edit" class="button">Bearbeiten</button>
 		</form>
-		<button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
+		<button type="button" class="button btn-delete" onclick="delete_entry()">Löschen</button>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
 
@@ -37,9 +37,9 @@
 				$result = $stmt->get_result();
 				while ($row = $result->fetch_assoc()) {
 					echo "<tr onclick='select(" .$row['id'] .")'>";
-					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entity'></td>";
+					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entry'></td>";
 					echo "<td>" .$row['id'] ."</td>";
-					echo "<td>" .$row['bezeichnung'] ."</td>";
+					echo "<td>" .utf8_encode($row['bezeichnung']) ."</td>";
 					echo "</tr>";
 				}
 			?>

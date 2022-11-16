@@ -2,6 +2,17 @@
 <html lang="en">
 <?php
 	include('../../config/config.php');
+
+	
+	if (isset($_POST['delete'])) {	
+		$id = $_POST['entry'];
+		//$stmt = $conn->prepare('DELETE FROM charakter WHERE id = ?');
+		//$stmt->bind_param('i', $id);
+		//$stmt->execute();
+		//$stmt->close();
+		//echo "<script type='text/javascript'>alert('id = " .$id ."');</script>";
+	}
+
 ?>
 <head>
     <meta charset="UTF-8">
@@ -19,7 +30,9 @@
 			<button type="submit" name="add" class="button btn-primary">Hinzufügen</button>
 			<button type="submit" name="edit" class="button">Bearbeiten</button>
 		</form>
-		<button type="button" class="button btn-delete" onclick="delete_entity()">Löschen</button>
+		<form id="deleteForm" style="margin:0; padding:0" method="post">
+			<button type="submit" name="delete" id="delete" class="button btn-delete">Löschen</button>
+		</form>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
 
@@ -37,9 +50,9 @@
 				$result = $stmt->get_result();
 				while ($row = $result->fetch_assoc()) {
 					echo "<tr onclick='select(" .$row['id'] .")'>";
-					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entity'></td>";
+					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entry' value='" .$row['id'] ."'></td>";
 					echo "<td>" .$row['id'] ."</td>";
-					echo "<td>" .$row['bezeichnung'] ."</td>";
+					echo "<td>" .utf8_encode($row['bezeichnung']) ."</td>";
 					echo "</tr>";
 				}
 			?>

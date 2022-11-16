@@ -1,5 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+	include('../../config/config.php');
+	
+	//process action if submitted else display form
+	if (isset($_POST['submit'])) {
+		$bezeichnung = utf8_decode($_POST['bezeichnung']);
+		$lebenserwartung = $_POST['lebenserwartung'];
+		$min_gewicht = $_POST['min-gewicht'];
+		$max_gewicht = $_POST['max-gewicht'];
+		$min_widerrist = $_POST['min-widerrist'];
+		$max_widerrist = $_POST['max-widerrist'];
+		$herkunft = utf8_decode($_POST['herkunft']);
+		$arbeit = $_POST['arbeit'];
+		$sozial = $_POST['sozial'];
+		$gruppe = $_POST['gruppe'];
+		$geschichte = utf8_decode($_POST['geschichte']);
+		$zu_achten_auf = utf8_decode($_POST['zu-achten-auf']);
+		$bild = null;
+		if (!empty($_FILES['bild']['tmp_name'])) {
+			$bild = file_get_contents($_FILES['bild']['tmp_name']);
+		}
+		if ($_POST['id'] == null) {
+			//create new entry
+			$stmt = $conn->prepare('INSERT INTO rasse(bezeichnung, lebenserwartung, minimal_gewicht, maximal_gewicht, minimal_widerrist, maximal:widerrist, herkunft, verwendung_arbeit, verwendung_sozial, gruppe_id, geschichte, zu_achten_auf, bild) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)');
+			$stmt->bind_param('siiiiisiiissb', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $bild);
+			$stmt->execute();
+			$stmt->close();
+		} else {
+			//update entry
+		}
+		//redirect to list view
+		$url = '../list/rasselist.php';
+		header('location: ' .$url);
+		exit();
+	}
+?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +46,8 @@
 <script src="../../js/adminscript.js"></script>
 <body>
     <h1 class="page-title">Hunderasse Formular</h1>
-    <form action="../form/rasseform.php" method="post" id="rasse-form">
+    <form method="post" id="rasse-form">
+		<input type="hidden" name="id" id="id">
         <label for="bezeichnung">Bezeichnung</label><br>
         <input type="text" name="bezeichnung" id="bezeichnung"><br>
         <label for="lebenserwartung">Lebenserwartung</label><br>
@@ -77,7 +114,7 @@
             <button type="button" class="custom-input-button" onclick="add_custom_fell()">+</button>
         </div>
         <div class="button-layout">
-            <button class="button btn-primary" type="submit" id="submit">Absenden</button>
+            <button class="button btn-primary" type="submit" name="submit" id="submit">Absenden</button>
             <a href="../list/rasselist.php"><button type="button" class="button" >Abbrechen</button></a>
         </div>
     </form>

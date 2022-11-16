@@ -63,9 +63,8 @@ function select(id) {
 		element.classList.remove('selected');
 	}
 	element.checked = !element.checked;
-	
 }
 
-function edit_entity() {
-	document.getElementById
+function edit_entry() {
+	
 }
