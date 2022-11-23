@@ -1,6 +1,6 @@
 <?php 
-session_start();
-$pdo = new PDO('', '', '');
+//session_start();
+$pdo = new PDO('mysql:host=localhost;dbname=hunde', 'bsfhM151', '151Mhfsb');
 ?>
  
 <?php
@@ -10,7 +10,7 @@ if(isset($_POST['register'])) {
     $error = false;
     $surname = $_POST['surname'];
     $lastname = $_POST['lastname'];
-    $username = $_POST['lastname'];
+    $username = $_POST['username'];
     $email = $_POST['email'];
     $password1 = $_POST['password1'];
     $password2 = $_POST['password2'];
@@ -43,7 +43,7 @@ if(isset($_POST['register'])) {
     
     //Überprüfe, dass die E-Mail-Adresse noch nicht registriert wurde
     if(!$error) { 
-        $statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $statement = $pdo->prepare("SELECT * FROM user_login WHERE email = :email");
         $result = $statement->execute(array('email' => $email));
         $user = $statement->fetch();
         
@@ -57,12 +57,11 @@ if(isset($_POST['register'])) {
     if(!$error) {    
         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
         
-        $statement = $pdo->prepare("INSERT INTO users (email, passwort) VALUES (:email, :passwort)");
+        $statement = $pdo->prepare("INSERT INTO user_login (surname, lastname, username, email, `password`) VALUES (:surname, :lastname, :username, :email, :`password`)");
         $result = $statement->execute(array('email' => $email, 'passwort' => $password_hash));
         
         if($result) {        
-            echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
-            $showFormular = false;
+            echo 'Du wurdest erfolgreich registriert.Nun kannst du dich einloggen';
         } else {
             echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
         }

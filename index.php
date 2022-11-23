@@ -1,7 +1,7 @@
 <?php
-/* session_start();
-$pdo = new PDO();
-*/
+// session_start();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -23,7 +23,7 @@ $pdo = new PDO();
         <div data-role="main" class="ui-content">
           <p>Registration</p>
           <form data-ajax="false" id="loginformular" method="post"
-              action="/user.php">
+              action="user.php">
               <div data-role="fieldcontain">
                 <fieldset>
                   <label for="surname">Vorname</label>
@@ -35,9 +35,9 @@ $pdo = new PDO();
                   <label for="email">E-Mail</label>
                   <input type="email" name="email" id="email" focus><br>
                   <label for="password">Kennwort</label>
-                  <input type="password1" name="password1" id="password1"><br>
+                  <input type="password" name="password1" id="password1"><br>
                   <label for="password2">Kennwort wiederholen</label>
-                  <input type="password2" name="password2" id="password2"><br>
+                  <input type="password" name="password2" id="password2"><br>
                   <input type="submit" value="register">
                 </fieldset>
               </div>
