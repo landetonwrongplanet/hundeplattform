@@ -3,6 +3,7 @@
 <?php
 	include('../../config/config.php');
 	
+	$print_message = "start...<br>";
 	//process action if submitted else display form
 	if (isset($_POST['submit'])) {
 		$bezeichnung = utf8_decode($_POST['bezeichnung']);
@@ -12,8 +13,8 @@
 		$min_widerrist = $_POST['min-widerrist'];
 		$max_widerrist = $_POST['max-widerrist'];
 		$herkunft = utf8_decode($_POST['herkunft']);
-		$arbeit = $_POST['arbeit'];
-		$sozial = $_POST['sozial'];
+		$arbeit = isset($_POST['arbeit']);
+		$sozial = isset($_POST['sozial']);
 		$gruppe = $_POST['gruppe'];
 		$geschichte = utf8_decode($_POST['geschichte']);
 		$zu_achten_auf = utf8_decode($_POST['zu-achten-auf']);
@@ -21,19 +22,104 @@
 		if (!empty($_FILES['bild']['tmp_name'])) {
 			$bild = file_get_contents($_FILES['bild']['tmp_name']);
 		}
+		
 		if ($_POST['id'] == null) {
 			//create new entry
-			$stmt = $conn->prepare('INSERT INTO rasse(bezeichnung, lebenserwartung, minimal_gewicht, maximal_gewicht, minimal_widerrist, maximal:widerrist, herkunft, verwendung_arbeit, verwendung_sozial, gruppe_id, geschichte, zu_achten_auf, bild) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)');
-			$stmt->bind_param('siiiiisiiissb', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $bild);
-			$stmt->execute();
-			$stmt->close();
+			$stmt = $conn->prepare('INSERT INTO rasse(bezeichnung, lebenserwartung, minimal_gewicht, maximal_gewicht, minimal_widerrist, maximal_widerrist, herkunft, verwendung_arbeit, verwendung_sozial, gruppe_id, geschichte, zu_achten_auf, bild) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)');
+			$stmt->bind_param('siiiiisiiisss', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $bild);
+			
+			//set up relations
+			if(mysqli_stmt_execute($stmt)) {
+				$rasse_id = $conn->insert_id;
+				$print_message .= "inserted data rasse id = " .$rasse_id ."<br>";
+				
+				$charakter = $_POST['charakter[]'];
+				$print_message .= "charakter = "	.$charakter			."<br>";
+				
+				foreach ($_POST['charakter'] as $val) {
+					$print_message .= "charakter loop: value = " .$val ."<br>";
+					$id = null;
+					if (is_string($val)) {
+						//add new entry
+						$print_message .= "adding new charakter <br>";
+						$stmt_new_char = $conn->prepare('INSERT INTO charakter(bezeichnung), VALUES(?)');
+						$stmt_new_char->bind_param('s', $val);
+						
+						if (mysqli_stmt_execute($stmt_new_char)) {
+							$id = $conn->insert_id;
+							$print_message .= "inserted data charakter id = " .$id ."<br>";
+						}
+					} else {
+						$id = $val;
+						$print_message .= "charakter id = " .$id ."<br>";
+					}
+			
+					if ($id != null) {
+						$stmt_char = $conn->prepare('INSERT INTO rasse_charakter(rasse_id, charakter_id) VALUES(?,?)');
+						$stmt_char->bind_param('ii', $rasse_id, $id);
+						$stmt_char->execute();
+						$print_message .= "inserted relation entry rasse charakter <br>";
+					}
+				}
+				foreach ($_POST['farbe'] as $val) {
+					$print_message .= "farbe loop: value = " .$val ."<br>";
+					$id;
+					if (is_string($val)) {
+						//add new entry
+						$print_message .= "adding new farbe <br>";
+						$stmt_new_farbe = $conn->prepare('INSERT INTO farbe(bezeichnung), VALUES(?)');
+						$stmt_new_farbe->bind_param('s', $val);
+						
+						if (mysqli_stmt_execute($stmt_new_farbe)) {
+							$id = $conn->insert_id;
+							$print_message .= "inserted data farbe id = " .$id ."<br>";
+						}
+					} else {
+						$id = $val;
+						$print_message .= "farbe id = " .$id ."<br>";
+					}
+					if ($id != null) {
+						$stmt_farbe = $conn->prepare('INSERT INTO rasse_farbe(rasse_id, farbe_id) VALUES(?,?)');
+						$stmt_farbe->bind_param('ii', $rasse_id, $id);
+						$stmt_farbe->execute();
+						$print_message .= "inserted relation entry rasse farbe <br>";
+					}
+				}
+				foreach ($_POST['fell'] as $val) {
+					$print_message .= "fell loop: value = " .$val ."<br>";
+					$id;
+					if (is_string($val)) {
+						//add new entry
+						$print_message .= "adding new fell <br>";
+						$stmt_new_fell = $conn->prepare('INSERT INTO fell(bezeichnung), VALUES(?)');
+						$stmt_new_fell->bind_param('s', $val);
+						
+						if (mysqli_stmt_execute($stmt_new_fell)) {
+							$id = $conn->insert_id;
+							$print_message .= "inserted data fell id = " .$id ."<br>";
+						}
+					} else {
+						$id = $val;
+						$print_message .= "fell id = " .$id ."<br>";
+					}
+					if ($id != null) {
+						$stmt_fell = $conn->prepare('INSERT INTO rasse_fell(rasse_id, fell_id) VALUES(?,?)');
+						$stmt_fell->bind_param('ii', $rasse_id, $id);
+						$stmt_fell->execute();
+						$print_message .= "inserted relation entry rasse fell <br>";
+					}
+				}
+			}
+
 		} else {
 			//update entry
 		}
 		//redirect to list view
+		/*
 		$url = '../list/rasselist.php';
 		header('location: ' .$url);
 		exit();
+		*/
 	}
 ?>
 <head>
@@ -45,8 +131,9 @@
 </head>
 <script src="../../js/adminscript.js"></script>
 <body>
+	<p><?php echo $print_message ?></p>
     <h1 class="page-title">Hunderasse Formular</h1>
-    <form method="post" id="rasse-form">
+    <form method="post" id="rasse-form" enctype="multipart/form-data">
 		<input type="hidden" name="id" id="id">
         <label for="bezeichnung">Bezeichnung</label><br>
         <input type="text" name="bezeichnung" id="bezeichnung"><br>
@@ -74,18 +161,27 @@
         <input type="file" name="bild" id="bild"><br>
         <label for="gruppe">Gruppe</label><br>
         <select name="gruppe" id="gruppe">
-            <option value="1">Hütehunde und Treibhunde</option>
-            <option value="2">Pinscher, Schnauzer, Molosser und Schweizer Sennenhunde</option>
-            <option value="3">Terrier</option>
-            <option value="4">etc...</option>
+			<?php
+				$query = "SELECT * FROM gruppe";
+				$stmt = $conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				while ($row = $result->fetch_assoc()) {
+					echo "<option value='" .$row['id'] ."'>" .utf8_encode($row['bezeichnung']) ."</option>";
+				}
+			?>
         </select><br>
         <label for="charakter">Charakter</label><br>
-        <select name="charakter" id="charakter" multiple>
-            <option value="freundlich">Freundlich</option>
-            <option value="aggressiv">Aggressiv</option>
-            <option value="sanft">Sanft</option>
-            <option value="loving">Loving</option>
-            <option value="timid">Timid</option>
+        <select name="charakter[]" id="charakter" multiple>
+            <?php
+				$query = "SELECT * FROM charakter";
+				$stmt = $conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				while ($row = $result->fetch_assoc()) {
+					echo "<option value='" .$row['id'] ."'>" .utf8_encode($row['bezeichnung']) ."</option>";
+				}
+			?>
         </select><br>
         <div class="custom-input-layout">
             <input class="inline" type="text" name="custom-charakter" id="custom-charakter">
@@ -93,10 +189,15 @@
         </div>
         <label for="farbe">Farbe</label><br>
         <select name="farbe" id="farbe" multiple>
-            <option value="braun">Braun</option>
-            <option value="blonde">Blonde</option>
-            <option value="schwarz">Schwarz</option>
-            <option value="weiss">Weiss</option>
+            <?php
+				$query = "SELECT * FROM farbe";
+				$stmt = $conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				while ($row = $result->fetch_assoc()) {
+					echo "<option value='" .$row['id'] ."'>" .utf8_encode($row['bezeichnung']) ."</option>";
+				}
+			?>
         </select><br>
         <div class="custom-input-layout">
             <input class="inline" type="text" name="custom-farbe" id="custom-farbe">
@@ -104,10 +205,15 @@
         </div>
         <label for="fell">Fell</label><br>
         <select name="fell" id="fell" multiple>
-            <option value="lang">Lang</option>
-            <option value="kurz">Kurz</option>
-            <option value="wavy">Wavy</option>
-            <option value="curly">Curly</option>
+            <?php
+				$query = "SELECT * FROM fell";
+				$stmt = $conn->prepare($query);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				while ($row = $result->fetch_assoc()) {
+					echo "<option value='" .$row['id'] ."'>" .utf8_encode($row['bezeichnung']) ."</option>";
+				}
+			?>
         </select><br>
         <div class="custom-input-layout">
             <input class="inline" type="text" name="custom-fell" id="custom-fell">

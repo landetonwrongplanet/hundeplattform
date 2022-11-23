@@ -11,6 +11,7 @@ function add_custom_charakter() {
     if (valid) {
         var option = document.createElement('option');
         option.text = value;
+		option.setAttribute('value', value);
         document.getElementById('charakter').add(option);
     }
     document.getElementById('custom-charakter').value = "";
@@ -30,6 +31,7 @@ function add_custom_farbe() {
     if (valid) {
         var option = document.createElement('option');
         option.text = value;
+		option.setAttribute('value', value);
         document.getElementById('farbe').add(option);
     }
     document.getElementById('custom-farbe').value = "";
@@ -49,6 +51,7 @@ function add_custom_fell() {
     if (valid) {
         var option = document.createElement('option');
         option.text = value;
+		option.setAttribute('value', value);
         document.getElementById('fell').add(option);
     }
     document.getElementById('custom-fell').value = "";
