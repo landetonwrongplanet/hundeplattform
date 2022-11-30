@@ -1,10 +1,17 @@
+
 <?php 
-//session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=hunde', 'bsfhM151', '151Mhfsb');
-?>
- 
-<?php
- 
+
+session_start();
+
+$db_user = "bsfhM151";
+$pass = "151Mhfsb";
+$host = "localhost";
+$db = "hunde";
+
+$conn = mysqli_connect($host, $db_user, $pass, $db) or die("A connection could not be established.");
+
+
+
 if(isset($_POST['register'])) {
 
     $error = false;
@@ -71,7 +78,7 @@ if(isset($_POST['register'])) {
 if($showFormular) {
 ?>
  
-<form action="?register=1" method="post">
+<form action="?register" method="post">
 E-Mail:<br>
 <input type="email" size="40" maxlength="250" name="email"><br><br>
  

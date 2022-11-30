@@ -1,6 +1,5 @@
 <?php
-// session_start();
-
+session_start();
 
 ?>
 <!DOCTYPE html>
@@ -48,7 +47,7 @@
         <div data-role="main">
           <p>Login</p>
           <form data-ajax="false" id="loginformular" method="post"
-              action="index.php#login">
+              action="user.php">
               <div data-role="fieldcontain">
                 <fieldset>
                   <label for="username">Benutzername</label>
