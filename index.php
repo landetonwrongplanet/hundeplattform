@@ -70,6 +70,11 @@ session_start();
         Sie können zu Hunderassen nachlesen, 
         Bilder zu den jeweiligen Rassen ansehen und sich via Quiz die passende Rasse heraussuchen.
       </p>
+      <form action="user.php" method="post">
+        <input type="text" name="vorname">
+        <input type="text" name="nachname">
+        <input type="submit" value="register" name="submit">
+      </form>
     </div>
 </div>
 <div class="footer">

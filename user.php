@@ -1,8 +1,42 @@
 
 <?php 
 
-include('config/config.php');
 
+$hostname = "localhost";
+$username = "bsfh";
+$password = "151Mhfsb";
+$db = "hunde";
+
+
+$dbconnect=mysqli_connect($hostname,$username,$password,$db);
+
+if ($dbconnect->connect_error) {
+  die("Database connection failed: " . $dbconnect->connect_error);
+}
+
+//include('config/config.php');
+
+if(isset($_POST['submit'])) {
+    $name=$_POST['vorname'];
+    $surname=$_POST['nachname'];
+    
+    $query = "INSERT INTO test (vorname, nachname)
+    VALUES ('$name', '$surname')";
+
+
+if (!mysqli_query($dbconnect, $query)) {
+    die('An error occurred when submitting your review.');
+} else {
+  echo "Thanks for your review.";
+}
+
+}
+?>
+
+
+
+<?php
+/*
 if(isset($_POST['register'])) {
 
     $error = false;
@@ -41,7 +75,7 @@ if(isset($_POST['register'])) {
     
     //Überprüfe, dass die E-Mail-Adresse noch nicht registriert wurde
     if(!$error) { 
-        $statement = $conn->prepare("SELECT * FROM user_login WHERE email = :email");
+        $statement = $conn->prepare("SELECT * FROM user_login WHERE email = $email");
         $result = $statement->execute(array('email' => $email));
         $user = $statement->fetch();
         
@@ -53,10 +87,10 @@ if(isset($_POST['register'])) {
     
     //Keine Fehler, wir können den Nutzer registrieren
     if(!$error) {    
-        $password_hash = password_hash($password1, PASSWORD_DEFAULT);
+        $password1 = password_hash($password1, PASSWORD_DEFAULT);
         
-        $statement = $conn->prepare("INSERT INTO user_login (surname, lastname, username, email, `password`) VALUES ($surname, $lastname, $username, $email, $password1)");
-        $result = $statement->execute(array('email' => $email, 'passwort' => $password_hash));
+        $statement = $conn->prepare("INSERT INTO user_login (surname, lastname, username, email, `password`) VALUES ('$surname', '$lastname', '$username', '$email', '$password1')");
+        $result = $statement->execute(array('email' => $email, 'password1' => $password1));
         
         if($result) {        
             echo 'Du wurdest erfolgreich registriert.Nun kannst du dich einloggen';
@@ -64,8 +98,7 @@ if(isset($_POST['register'])) {
             echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
         }
     } 
-}
- 
+}*/
 
 ?>
 
