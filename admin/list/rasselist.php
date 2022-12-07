@@ -98,7 +98,7 @@
 					if ($row['bild'] != null) {
 						echo "<img style='max-width:100px; max-height: 100px;' src='data:image/*; base64," .base64_encode($row['bild']). "'/>";
 					}
-					
+					echo "</td>";
 					echo "</tr>";
 				}
 			?>
