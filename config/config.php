@@ -1,5 +1,5 @@
 <?php
-	#Config for database and session
+	#Config for database and session (eventually outsource)
 
 	#Configuration details for the database connection
 	$db_user = "bsfh";
@@ -9,7 +9,8 @@
 	
 	#Connection stored here
 	$conn = mysqli_connect($host, $db_user, $pass, $db) or die("A connection could not be established.");
-	
+	echo "Verbindung erfolgreich";
+
 	session_start();
 	
 	if(isset($_SESSION["user"])) {
