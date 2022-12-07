@@ -3,7 +3,7 @@
 <?php
 	include('../../config/config.php');
 
-	
+	//prototype
 	if (isset($_POST['delete'])) {	
 		$id = $_POST['entry'];
 		//$stmt = $conn->prepare('DELETE FROM charakter WHERE id = ?');
@@ -12,7 +12,6 @@
 		//$stmt->close();
 		//echo "<script type='text/javascript'>alert('id = " .$id ."');</script>";
 	}
-
 ?>
 <head>
     <meta charset="UTF-8">
@@ -27,8 +26,9 @@
 
     <div class="button-layout">
 		<form style="margin:0; padding:0" action="../form/charakterform.php" method="post">
-			<button type="submit" name="add" class="button btn-primary">Hinzufügen</button>
-			<button type="submit" name="edit" class="button">Bearbeiten</button>
+			<input type="hidden" name="selected-id" id="selected-id">
+			<button type="submit" name="add" id="add" class="button btn-primary">Hinzufügen</button>
+			<button type="submit" name="edit" id="edit" class="button">Bearbeiten</button>
 		</form>
 		<form id="deleteForm" style="margin:0; padding:0" method="post">
 			<button type="submit" name="delete" id="delete" class="button btn-delete">Löschen</button>

@@ -1,9 +1,9 @@
 function add_custom_charakter() {
     var options = document.getElementById('charakter');
     var value = document.getElementById('custom-charakter').value;
-    var valid = value != "";
+    var valid = value != "" && isNaN(value);
     for (i = 0; i < options.length; i++) {
-        if (options[i].value == value) {
+        if (options[i].text == value) {
             valid = false;
             break;
         }
@@ -21,9 +21,9 @@ function add_custom_charakter() {
 function add_custom_farbe() {
     var options = document.getElementById('farbe');
     var value = document.getElementById('custom-farbe').value;
-    var valid = value != "";
+    var valid = value != "" && isNaN(value);
     for (i = 0; i < options.length; i++) {
-        if (options[i].value == value) {
+        if (options[i].text == value) {
             valid = false;
             break;
         }
@@ -41,9 +41,9 @@ function add_custom_farbe() {
 function add_custom_fell() {
     var options = document.getElementById('fell');
     var value = document.getElementById('custom-fell').value;
-    var valid = value != "";
+    var valid = value != "" && isNaN(value);
     for (i = 0; i < options.length; i++) {
-        if (options[i].value == value) {
+        if (options[i].text == value) {
             valid = false;
             break;
         }
@@ -61,8 +61,10 @@ function add_custom_fell() {
 function select(id) {
 	var element = document.getElementById(id);
 	if (element.checked == true) {
+		document.getElementById('selected-id').value = null;
 		element.classList.add('selected');
 	} else {
+		document.getElementById('selected-id').value = id;
 		element.classList.remove('selected');
 	}
 	element.checked = !element.checked;

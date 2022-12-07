@@ -2,8 +2,73 @@
 <html lang="en">
 <?php
 	include('../../config/config.php');
+	$id = null;
+	$bezeichnung = null;
+	$lebenserwartung = null;
+	$min_gewicht = null;
+	$max_gewicht = null;
+	$min_widerrist = null;
+	$max_widerrist = null;
+	$herkunft = null;
+	$arbeit = null;
+	$sozial = null;
+	$gruppe = null;
+	$geschichte = null;
+	$zu_achten_auf = null;
+	$charakter[] = null; 
+	$farbe[] = null;
+	$fell[] = null;
 	
-	$print_message = "start...<br>";
+	if (isset($_POST['edit']) && isset($_POST['selected-id'])) {
+		//set form data
+		$id = $_POST['selected-id'];
+		
+		$query = $conn->prepare("SELECT * FROM rasse where id = ?");
+		$query->bind_param('i', $id);
+		$query->execute();
+		$result = $query->get_result();
+		$entry = $result->fetch_assoc();
+		
+		$bezeichnung = $entry['bezeichnung'];
+		$lebenserwartung = $entry['lebenserwartung'];
+		$min_gewicht = $entry['minimal_gewicht'];
+		$max_gewicht = $entry['maximal_gewicht'];
+		$min_widerrist = $entry['minimal_widerrist'];
+		$max_widerrist = $entry['maximal_widerrist'];
+		$herkunft = $entry['herkunft'];
+		$arbeit = $entry['verwendung_arbeit'];
+		$sozial = $entry['verwendung_sozial'];
+		$gruppe = $entry['gruppe_id'];
+		$geschichte = $entry['geschichte'];
+		$zu_achten_auf = $entry['zu_achten_auf'];
+	
+		$char_query = $conn->prepare("SELECT * FROM rasse_charakter where rasse_id = ?");
+		$char_query->bind_param('i', $id);
+		$char_query->execute();
+		$char_result = $char_query->get_result();
+		while ($row = $char_result->fetch_assoc()) {
+			array_push($charakter, $row['charakter_id']);
+		}
+		
+		$farbe_query = $conn->prepare("SELECT * FROM rasse_farbe where rasse_id = ?");
+		$farbe_query->bind_param('i', $id);
+		$farbe_query->execute();
+		$farbe_result = $farbe_query->get_result();
+		while ($row = $farbe_result->fetch_assoc()) {
+			array_push($farbe, $row['farbe_id']);
+		}
+		
+		$fell_query = $conn->prepare("SELECT * FROM rasse_fell where rasse_id = ?");
+		$fell_query->bind_param('i', $id);
+		$fell_query->execute();
+		$fell_result = $fell_query->get_result();
+		while ($row = $fell_result->fetch_assoc()) {
+			array_push($fell, $row['fell_id']);
+		}
+		
+		$char_query->close();
+	}
+	
 	//process action if submitted else display form
 	if (isset($_POST['submit'])) {
 		$bezeichnung = utf8_decode($_POST['bezeichnung']);
@@ -31,82 +96,67 @@
 			//set up relations
 			if(mysqli_stmt_execute($stmt)) {
 				$rasse_id = $conn->insert_id;
-				$print_message .= "inserted data rasse id = " .$rasse_id ."<br>";
-				
-				$charakter = $_POST['charakter[]'];
-				$print_message .= "charakter = "	.$charakter			."<br>";
-				
+
 				foreach ($_POST['charakter'] as $val) {
-					$print_message .= "charakter loop: value = " .$val ."<br>";
 					$id = null;
-					if (is_string($val)) {
+					if (is_numeric($val)) {
+						$id = $val;
+						
+					} else {
 						//add new entry
-						$print_message .= "adding new charakter <br>";
-						$stmt_new_char = $conn->prepare('INSERT INTO charakter(bezeichnung), VALUES(?)');
+						$stmt_new_char = $conn->prepare('INSERT INTO charakter(bezeichnung) VALUES(?)');
 						$stmt_new_char->bind_param('s', $val);
 						
 						if (mysqli_stmt_execute($stmt_new_char)) {
 							$id = $conn->insert_id;
-							$print_message .= "inserted data charakter id = " .$id ."<br>";
 						}
-					} else {
-						$id = $val;
-						$print_message .= "charakter id = " .$id ."<br>";
 					}
-			
 					if ($id != null) {
 						$stmt_char = $conn->prepare('INSERT INTO rasse_charakter(rasse_id, charakter_id) VALUES(?,?)');
 						$stmt_char->bind_param('ii', $rasse_id, $id);
 						$stmt_char->execute();
-						$print_message .= "inserted relation entry rasse charakter <br>";
 					}
 				}
+				
 				foreach ($_POST['farbe'] as $val) {
-					$print_message .= "farbe loop: value = " .$val ."<br>";
 					$id;
-					if (is_string($val)) {
+					if (is_numeric($val)) {
+						$id = $val;
+						
+					} else {
 						//add new entry
-						$print_message .= "adding new farbe <br>";
-						$stmt_new_farbe = $conn->prepare('INSERT INTO farbe(bezeichnung), VALUES(?)');
+						$stmt_new_farbe = $conn->prepare('INSERT INTO farbe(bezeichnung) VALUES(?)');
 						$stmt_new_farbe->bind_param('s', $val);
 						
 						if (mysqli_stmt_execute($stmt_new_farbe)) {
 							$id = $conn->insert_id;
-							$print_message .= "inserted data farbe id = " .$id ."<br>";
 						}
-					} else {
-						$id = $val;
-						$print_message .= "farbe id = " .$id ."<br>";
 					}
 					if ($id != null) {
 						$stmt_farbe = $conn->prepare('INSERT INTO rasse_farbe(rasse_id, farbe_id) VALUES(?,?)');
 						$stmt_farbe->bind_param('ii', $rasse_id, $id);
 						$stmt_farbe->execute();
-						$print_message .= "inserted relation entry rasse farbe <br>";
 					}
 				}
+				
 				foreach ($_POST['fell'] as $val) {
-					$print_message .= "fell loop: value = " .$val ."<br>";
 					$id;
-					if (is_string($val)) {
+					if (is_numeric($val)) {
+						$id = $val;
+						
+					} else {
 						//add new entry
-						$print_message .= "adding new fell <br>";
-						$stmt_new_fell = $conn->prepare('INSERT INTO fell(bezeichnung), VALUES(?)');
+						$stmt_new_fell = $conn->prepare('INSERT INTO fell(bezeichnung) VALUES(?)');
 						$stmt_new_fell->bind_param('s', $val);
 						
 						if (mysqli_stmt_execute($stmt_new_fell)) {
 							$id = $conn->insert_id;
-							$print_message .= "inserted data fell id = " .$id ."<br>";
 						}
-					} else {
-						$id = $val;
-						$print_message .= "fell id = " .$id ."<br>";
 					}
 					if ($id != null) {
 						$stmt_fell = $conn->prepare('INSERT INTO rasse_fell(rasse_id, fell_id) VALUES(?,?)');
 						$stmt_fell->bind_param('ii', $rasse_id, $id);
 						$stmt_fell->execute();
-						$print_message .= "inserted relation entry rasse fell <br>";
 					}
 				}
 			}
@@ -114,12 +164,11 @@
 		} else {
 			//update entry
 		}
+		
 		//redirect to list view
-		/*
 		$url = '../list/rasselist.php';
 		header('location: ' .$url);
 		exit();
-		*/
 	}
 ?>
 <head>
@@ -131,32 +180,31 @@
 </head>
 <script src="../../js/adminscript.js"></script>
 <body>
-	<p><?php echo $print_message ?></p>
     <h1 class="page-title">Hunderasse Formular</h1>
-    <form method="post" id="rasse-form" enctype="multipart/form-data">
-		<input type="hidden" name="id" id="id">
+    <form method="post" id="rasse-form" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
+		<input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
         <label for="bezeichnung">Bezeichnung</label><br>
-        <input type="text" name="bezeichnung" id="bezeichnung"><br>
+        <input type="text" name="bezeichnung" id="bezeichnung" value="<?php echo $bezeichnung; ?>"><br>
         <label for="lebenserwartung">Lebenserwartung</label><br>
-        <input type="number" name="lebenserwartung" id="lebenserwartung"><br>
+        <input type="number" name="lebenserwartung" id="lebenserwartung" value="<?php echo $lebenserwartung; ?>"><br>
         <label for="min-gewicht">Minimum Gewicht (kg)</label><br>
-        <input type="number" name="min-gewicht" id="min-gewicht" min="0" max="100"><br>
+        <input type="number" name="min-gewicht" id="min-gewicht" min="0" max="100" value="<?php echo $min_gewicht; ?>"><br>
         <label for="max-gewicht">Maximum Gewicht (kg)</label><br>
-        <input type="number" name="max-gewicht" id="max-gewicht" min="0" max="100"><br>
+        <input type="number" name="max-gewicht" id="max-gewicht" min="0" max="100" value="<?php echo $max_gewicht; ?>"><br>
         <label for="min-widerrist">Minimum Widerrist (cm)</label><br>
-        <input type="number" name="min-widerrist" id="min-widerrist" min="0" max="200"><br>
+        <input type="number" name="min-widerrist" id="min-widerrist" min="0" max="200" value="<?php echo $min_widerrist; ?>"><br>
         <label for="max-widerrist">Maximum Widerrist (cm)</label><br>
-        <input type="number" name="max-widerrist" id="max-widerrist" min="0" max="200"><br>
+        <input type="number" name="max-widerrist" id="max-widerrist" min="0" max="200" value="<?php echo $max_widerrist; ?>"><br>
         <label for="herkunft">Herkunft</label><br>
-        <input type="text" name="herkunft" id="herkunft"><br>
+        <input type="text" name="herkunft" id="herkunft" value="<?php echo $herkunft; ?>"><br>
         <label for="arbeit">Verwendung Arbeit</label>
-        <input type="checkbox" name="arbeit" id="arbeit"><br>
+        <input type="checkbox" name="arbeit" id="arbeit" <?php echo $arbeit ? " checked" : ""; ?>><br>
         <label for="sozial">Verwendung Sozial</label>
-        <input type="checkbox" name="sozial" id="sozial"><br>
+        <input type="checkbox" name="sozial" id="sozial" <?php echo $sozial ? " checked" : ""; ?>><br>
         <label for="geschichte">Geschichte</label><br>
-        <textarea rows="2" name="geschichte" form="rasse-form"></textarea><br>
+        <textarea rows="2" name="geschichte" form="rasse-form"><?php echo utf8_encode($geschichte); ?></textarea><br>
         <label for="zu-achten-auf">Zu achten auf</label><br>
-        <textarea rows="2" name="zu-achten-auf" form="rasse-form"></textarea><br>
+        <textarea rows="2" name="zu-achten-auf" form="rasse-form"><?php echo utf8_encode($zu_achten_auf); ?></textarea><br>
         <label for="bild">Bild</label><br>
         <input type="file" name="bild" id="bild"><br>
         <label for="gruppe">Gruppe</label><br>
@@ -167,7 +215,7 @@
 				$stmt->execute();
 				$result = $stmt->get_result();
 				while ($row = $result->fetch_assoc()) {
-					echo "<option value='" .$row['id'] ."'>" .utf8_encode($row['bezeichnung']) ."</option>";
+					echo "<option value='" .$row['id'] ."'" .($row['id'] == 2 ? " selected" : "") .">" .utf8_encode($row['bezeichnung']) ."</option>";
 				}
 			?>
         </select><br>
@@ -179,7 +227,7 @@
 				$stmt->execute();
 				$result = $stmt->get_result();
 				while ($row = $result->fetch_assoc()) {
-					echo "<option value='" .$row['id'] ."'>" .utf8_encode($row['bezeichnung']) ."</option>";
+					echo "<option value='" .$row['id'] ."'" .(in_array($row['id'], $charakter) ? " selected" : "") .">" .utf8_encode($row['bezeichnung']) ."</option>";
 				}
 			?>
         </select><br>
@@ -188,14 +236,14 @@
             <button type="button" class="custom-input-button" onclick="add_custom_charakter()">+</button>
         </div>
         <label for="farbe">Farbe</label><br>
-        <select name="farbe" id="farbe" multiple>
+        <select name="farbe[]" id="farbe" multiple>
             <?php
 				$query = "SELECT * FROM farbe";
 				$stmt = $conn->prepare($query);
 				$stmt->execute();
 				$result = $stmt->get_result();
 				while ($row = $result->fetch_assoc()) {
-					echo "<option value='" .$row['id'] ."'>" .utf8_encode($row['bezeichnung']) ."</option>";
+					echo "<option value='" .$row['id'] ."'" .(in_array($row['id'], $farbe) ? " selected" : "") .">" .utf8_encode($row['bezeichnung']) ."</option>";
 				}
 			?>
         </select><br>
@@ -204,14 +252,14 @@
             <button type="button" class="custom-input-button" onclick="add_custom_farbe()">+</button>
         </div>
         <label for="fell">Fell</label><br>
-        <select name="fell" id="fell" multiple>
+        <select name="fell[]" id="fell" multiple>
             <?php
 				$query = "SELECT * FROM fell";
 				$stmt = $conn->prepare($query);
 				$stmt->execute();
 				$result = $stmt->get_result();
 				while ($row = $result->fetch_assoc()) {
-					echo "<option value='" .$row['id'] ."'>" .utf8_encode($row['bezeichnung']) ."</option>";
+					echo "<option value='" .$row['id'] ."'" .(in_array($row['id'], $fell) ? " selected" : "") .">" .utf8_encode($row['bezeichnung']) ."</option>";
 				}
 			?>
         </select><br>

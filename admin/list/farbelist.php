@@ -16,8 +16,9 @@
 
     <div class="button-layout">
 		<form style="margin:0; padding:0" action="../form/farbeform.php" method="post">
-			<button type="submit" name="add" class="button btn-primary">Hinzufügen</button>
-			<button type="submit" name="edit" class="button">Bearbeiten</button>
+			<input type="hidden" name="selected-id" id="selected-id">
+			<button type="submit" name="add" id="add" class="button btn-primary">Hinzufügen</button>
+			<button type="submit" name="edit" id="edit" class="button">Bearbeiten</button>
 		</form>
 		<button type="button" class="button btn-delete" onclick="delete_entry()">Löschen</button>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
