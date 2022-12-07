@@ -62,9 +62,11 @@ function select(id) {
 	var element = document.getElementById(id);
 	if (element.checked == true) {
 		document.getElementById('selected-id').value = null;
+		document.getElementById('delete-id').value = null;
 		element.classList.add('selected');
 	} else {
 		document.getElementById('selected-id').value = id;
+		document.getElementById('delete-id').value = id;
 		element.classList.remove('selected');
 	}
 	element.checked = !element.checked;

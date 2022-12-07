@@ -62,7 +62,7 @@
         <label for="nummer">Gruppennummer</label>
         <input type="number" name="nummer" id="nummer" value="<?php echo $gruppennummer; ?>"><br>
         <label for="bezeichnung">Bezeichnung</label><br>
-        <input type="text" name="bezeichnung" id="bezeichnung" value="<?php echo $bezeichnung; ?>"><br>
+        <input type="text" name="bezeichnung" id="bezeichnung" value="<?php echo utf8_encode($bezeichnung); ?>"><br>
         <div class="button-layout">
             <button class="button btn-primary" type="submit" name="submit" id="submit">Absenden</button>
             <a href="../list/gruppelist.php"><button type="button" class="button">Abbrechen</button></a>

@@ -56,7 +56,7 @@
     <form method="post" id="fell-form">
 		<input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
         <label for="bezeichnung">Bezeichnung</label><br>
-        <input type="text" name="bezeichnung" id="bezeichnung" value="<?php echo $bezeichnung; ?>"><br>
+        <input type="text" name="bezeichnung" id="bezeichnung" value="<?php echo utf8_encode($bezeichnung); ?>"><br>
         <div class="button-layout">
             <button class="button btn-primary" type="submit" name="submit" id="submit">Absenden</button>
             <a href="../list/felllist.php"><button type="button" class="button">Abbrechen</button></a>

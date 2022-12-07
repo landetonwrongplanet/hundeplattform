@@ -2,6 +2,24 @@
 <html lang="en">
 <?php
 	include('../../config/config.php');
+	
+	if (isset($_POST['delete'])) {	
+		$id = $_POST['delete-id'];
+		
+		$var = null;
+		
+		//remove relations
+		$rel_stmt = $conn->prepare('UPDATE rasse SET gruppe_id = ? WHERE gruppe_id = ?');
+		$rel_stmt->bind_param('ii', $var, $id);
+		$rel_stmt->execute();
+		$rel_stmt->close();
+		
+		//delete entry
+		$stmt = $conn->prepare('DELETE FROM gruppe WHERE id = ?');
+		$stmt->bind_param('i', $id);
+		$stmt->execute();
+		$stmt->close();
+	}
 ?>
 <head>
     <meta charset="UTF-8">
@@ -20,7 +38,10 @@
 			<button type="submit" name="add" id="add" class="button btn-primary">Hinzufügen</button>
 			<button type="submit" name="edit" id="edit" class="button">Bearbeiten</button>
 		</form>
-		<button type="button" class="button btn-delete" onclick="delete_entry()">Löschen</button>
+		<form id="deleteForm" style="margin:0; padding:0" method="post">
+			<input type="hidden" name="delete-id" id="delete-id">
+			<button type="submit" name="delete" id="delete" class="button btn-delete">Löschen</button>
+		</form>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
 

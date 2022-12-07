@@ -93,76 +93,104 @@
 			$stmt = $conn->prepare('INSERT INTO rasse(bezeichnung, lebenserwartung, minimal_gewicht, maximal_gewicht, minimal_widerrist, maximal_widerrist, herkunft, verwendung_arbeit, verwendung_sozial, gruppe_id, geschichte, zu_achten_auf, bild) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)');
 			$stmt->bind_param('siiiiisiiisss', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $bild);
 			
-			//set up relations
+			//set id for adding relations
 			if(mysqli_stmt_execute($stmt)) {
-				$rasse_id = $conn->insert_id;
-
-				foreach ($_POST['charakter'] as $val) {
-					$id = null;
-					if (is_numeric($val)) {
-						$id = $val;
-						
-					} else {
-						//add new entry
-						$stmt_new_char = $conn->prepare('INSERT INTO charakter(bezeichnung) VALUES(?)');
-						$stmt_new_char->bind_param('s', $val);
-						
-						if (mysqli_stmt_execute($stmt_new_char)) {
-							$id = $conn->insert_id;
-						}
-					}
-					if ($id != null) {
-						$stmt_char = $conn->prepare('INSERT INTO rasse_charakter(rasse_id, charakter_id) VALUES(?,?)');
-						$stmt_char->bind_param('ii', $rasse_id, $id);
-						$stmt_char->execute();
-					}
-				}
-				
-				foreach ($_POST['farbe'] as $val) {
-					$id;
-					if (is_numeric($val)) {
-						$id = $val;
-						
-					} else {
-						//add new entry
-						$stmt_new_farbe = $conn->prepare('INSERT INTO farbe(bezeichnung) VALUES(?)');
-						$stmt_new_farbe->bind_param('s', $val);
-						
-						if (mysqli_stmt_execute($stmt_new_farbe)) {
-							$id = $conn->insert_id;
-						}
-					}
-					if ($id != null) {
-						$stmt_farbe = $conn->prepare('INSERT INTO rasse_farbe(rasse_id, farbe_id) VALUES(?,?)');
-						$stmt_farbe->bind_param('ii', $rasse_id, $id);
-						$stmt_farbe->execute();
-					}
-				}
-				
-				foreach ($_POST['fell'] as $val) {
-					$id;
-					if (is_numeric($val)) {
-						$id = $val;
-						
-					} else {
-						//add new entry
-						$stmt_new_fell = $conn->prepare('INSERT INTO fell(bezeichnung) VALUES(?)');
-						$stmt_new_fell->bind_param('s', $val);
-						
-						if (mysqli_stmt_execute($stmt_new_fell)) {
-							$id = $conn->insert_id;
-						}
-					}
-					if ($id != null) {
-						$stmt_fell = $conn->prepare('INSERT INTO rasse_fell(rasse_id, fell_id) VALUES(?,?)');
-						$stmt_fell->bind_param('ii', $rasse_id, $id);
-						$stmt_fell->execute();
-					}
-				}
+				$id = $conn->insert_id;
 			}
 
 		} else {
 			//update entry
+			$id = $_POST['id'];
+		
+			$stmt = $conn->prepare('UPDATE rasse SET bezeichnung = ?, lebenserwartung = ?, minimal_gewicht = ?, maximal_gewicht = ?, minimal_widerrist = ?, maximal_widerrist = ?, herkunft = ?, verwendung_arbeit = ?, verwendung_sozial = ?, gruppe_id = ?, geschichte = ?, zu_achten_auf = ?, bild = ? WHERE id = ?');
+			$stmt->bind_param('siiiiisiiisssi', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $bild, $id);
+			$stmt->execute();
+			$stmt->close();
+			
+			//delete old relations
+			$del_char = $conn->prepare('DELETE FROM rasse_charakter WHERE rasse_id = ?');
+			$del_char->bind_param('i', $id);
+			$del_char->execute();
+			$del_char->close();
+			
+			$del_farbe = $conn->prepare('DELETE FROM rasse_farbe WHERE rasse_id = ?');
+			$del_farbe->bind_param('i', $id);
+			$del_farbe->execute();
+			$del_farbe->close();
+			
+			$del_fell = $conn->prepare('DELETE FROM rasse_fell WHERE rasse_id = ?');
+			$del_fell->bind_param('i', $id);
+			$del_fell->execute();
+			$del_fell->close();
+		}
+		
+		if ($id != null) {
+			//add new relations
+			foreach ($_POST['charakter'] as $val) {
+				$char_id = null;
+				if (is_numeric($val)) {
+					$char_id = $val;
+					
+				} else {
+					//add new entry
+					$stmt_new_char = $conn->prepare('INSERT INTO charakter(bezeichnung) VALUES(?)');
+					$stmt_new_char->bind_param('s', $val);
+					
+					if (mysqli_stmt_execute($stmt_new_char)) {
+						$char_id = $conn->insert_id;
+					}
+				}
+				if ($char_id != null) {
+					$stmt_char = $conn->prepare('INSERT INTO rasse_charakter(rasse_id, charakter_id) VALUES(?,?)');
+					$stmt_char->bind_param('ii', $id, $char_id);
+					$stmt_char->execute();
+					$stmt_char->close();
+				}
+			}
+			
+			foreach ($_POST['farbe'] as $val) {
+				$farbe_id;
+				if (is_numeric($val)) {
+					$farbe_id = $val;
+					
+				} else {
+					//add new entry
+					$stmt_new_farbe = $conn->prepare('INSERT INTO farbe(bezeichnung) VALUES(?)');
+					$stmt_new_farbe->bind_param('s', $val);
+					
+					if (mysqli_stmt_execute($stmt_new_farbe)) {
+						$farbe_id = $conn->insert_id;
+					}
+				}
+				if ($farbe_id != null) {
+					$stmt_farbe = $conn->prepare('INSERT INTO rasse_farbe(rasse_id, farbe_id) VALUES(?,?)');
+					$stmt_farbe->bind_param('ii', $id, $farbe_id);
+					$stmt_farbe->execute();
+					$stmt_farbe->close();
+				}
+			}
+			
+			foreach ($_POST['fell'] as $val) {
+				$fell_id;
+				if (is_numeric($val)) {
+					$fell_id = $val;
+					
+				} else {
+					//add new entry
+					$stmt_new_fell = $conn->prepare('INSERT INTO fell(bezeichnung) VALUES(?)');
+					$stmt_new_fell->bind_param('s', $val);
+					
+					if (mysqli_stmt_execute($stmt_new_fell)) {
+						$fell_id = $conn->insert_id;
+					}
+				}
+				if ($fell_id != null) {
+					$stmt_fell = $conn->prepare('INSERT INTO rasse_fell(rasse_id, fell_id) VALUES(?,?)');
+					$stmt_fell->bind_param('ii', $id, $fell_id);
+					$stmt_fell->execute();
+					$stmt_fell->close();
+				}
+			}
 		}
 		
 		//redirect to list view
@@ -184,7 +212,7 @@
     <form method="post" id="rasse-form" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
 		<input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
         <label for="bezeichnung">Bezeichnung</label><br>
-        <input type="text" name="bezeichnung" id="bezeichnung" value="<?php echo $bezeichnung; ?>"><br>
+        <input type="text" name="bezeichnung" id="bezeichnung" value="<?php echo utf8_encode($bezeichnung); ?>"><br>
         <label for="lebenserwartung">Lebenserwartung</label><br>
         <input type="number" name="lebenserwartung" id="lebenserwartung" value="<?php echo $lebenserwartung; ?>"><br>
         <label for="min-gewicht">Minimum Gewicht (kg)</label><br>
@@ -196,7 +224,7 @@
         <label for="max-widerrist">Maximum Widerrist (cm)</label><br>
         <input type="number" name="max-widerrist" id="max-widerrist" min="0" max="200" value="<?php echo $max_widerrist; ?>"><br>
         <label for="herkunft">Herkunft</label><br>
-        <input type="text" name="herkunft" id="herkunft" value="<?php echo $herkunft; ?>"><br>
+        <input type="text" name="herkunft" id="herkunft" value="<?php echo utf8_encode($herkunft); ?>"><br>
         <label for="arbeit">Verwendung Arbeit</label>
         <input type="checkbox" name="arbeit" id="arbeit" <?php echo $arbeit ? " checked" : ""; ?>><br>
         <label for="sozial">Verwendung Sozial</label>
@@ -215,7 +243,7 @@
 				$stmt->execute();
 				$result = $stmt->get_result();
 				while ($row = $result->fetch_assoc()) {
-					echo "<option value='" .$row['id'] ."'" .($row['id'] == 2 ? " selected" : "") .">" .utf8_encode($row['bezeichnung']) ."</option>";
+					echo "<option value='" .$row['id'] ."'" .($row['id'] == $gruppe ? " selected" : "") .">" .utf8_encode($row['bezeichnung']) ."</option>";
 				}
 			?>
         </select><br>

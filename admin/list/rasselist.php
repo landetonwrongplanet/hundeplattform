@@ -2,6 +2,32 @@
 <html lang="en">
 <?php
 	include('../../config/config.php');
+	
+	if (isset($_POST['delete'])) {	
+		$id = $_POST['delete-id'];
+		
+		//delete relations
+		$char_stmt = $conn->prepare('DELETE FROM rasse_charakter WHERE rasse_id = ?');
+		$char_stmt->bind_param('i', $id);
+		$char_stmt->execute();
+		$char_stmt->close();
+		
+		$farbe_stmt = $conn->prepare('DELETE FROM rasse_farbe WHERE rasse_id = ?');
+		$farbe_stmt->bind_param('i', $id);
+		$farbe_stmt->execute();
+		$farbe_stmt->close();
+		
+		$fell_stmt = $conn->prepare('DELETE FROM rasse_fell WHERE rasse_id = ?');
+		$fell_stmt->bind_param('i', $id);
+		$fell_stmt->execute();
+		$fell_stmt->close();
+		
+		//delete entry
+		$stmt = $conn->prepare('DELETE FROM rasse WHERE id = ?');
+		$stmt->bind_param('i', $id);
+		$stmt->execute();
+		$stmt->close();
+	}
 ?>
 <head>
     <meta charset="UTF-8">
@@ -20,7 +46,10 @@
 			<button type="submit" name="add" id="add" class="button btn-primary">Hinzufügen</button>
 			<button type="submit" name="edit" id="edit" class="button">Bearbeiten</button>
 		</form>
-		<button type="button" class="button btn-delete" onclick="delete_entry()">Löschen</button>
+		<form id="deleteForm" style="margin:0; padding:0" method="post">
+			<input type="hidden" name="delete-id" id="delete-id">
+			<button type="submit" name="delete" id="delete" class="button btn-delete">Löschen</button>
+		</form>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
 

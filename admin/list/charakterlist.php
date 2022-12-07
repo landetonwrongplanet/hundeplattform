@@ -3,14 +3,20 @@
 <?php
 	include('../../config/config.php');
 
-	//prototype
 	if (isset($_POST['delete'])) {	
-		$id = $_POST['entry'];
-		//$stmt = $conn->prepare('DELETE FROM charakter WHERE id = ?');
-		//$stmt->bind_param('i', $id);
-		//$stmt->execute();
-		//$stmt->close();
-		//echo "<script type='text/javascript'>alert('id = " .$id ."');</script>";
+		$id = $_POST['delete-id'];
+		
+		//delete relations
+		$rel_stmt = $conn->prepare('DELETE FROM rasse_charakter WHERE charakter_id = ?');
+		$rel_stmt->bind_param('i', $id);
+		$rel_stmt->execute();
+		$rel_stmt->close();
+		
+		//delete entry
+		$stmt = $conn->prepare('DELETE FROM charakter WHERE id = ?');
+		$stmt->bind_param('i', $id);
+		$stmt->execute();
+		$stmt->close();
 	}
 ?>
 <head>
@@ -31,6 +37,7 @@
 			<button type="submit" name="edit" id="edit" class="button">Bearbeiten</button>
 		</form>
 		<form id="deleteForm" style="margin:0; padding:0" method="post">
+			<input type="hidden" name="delete-id" id="delete-id">
 			<button type="submit" name="delete" id="delete" class="button btn-delete">Löschen</button>
 		</form>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
