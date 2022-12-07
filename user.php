@@ -55,7 +55,7 @@ if(isset($_POST['register'])) {
     if(!$error) {    
         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
         
-        $statement = $conn->prepare("INSERT INTO user_login (surname, lastname, username, email, `password`) VALUES ('surname', 'lastname', 'username', 'email', `password`)");
+        $statement = $conn->prepare("INSERT INTO user_login (surname, lastname, username, email, `password`) VALUES ($surname, $lastname, $username, $email, $password1)");
         $result = $statement->execute(array('email' => $email, 'passwort' => $password_hash));
         
         if($result) {        
