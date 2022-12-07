@@ -41,7 +41,7 @@ if(isset($_POST['register'])) {
     
     //Überprüfe, dass die E-Mail-Adresse noch nicht registriert wurde
     if(!$error) { 
-        $statement = $pdo->prepare("SELECT * FROM user_login WHERE email = :email");
+        $statement = $conn->prepare("SELECT * FROM user_login WHERE email = :email");
         $result = $statement->execute(array('email' => $email));
         $user = $statement->fetch();
         
@@ -55,7 +55,7 @@ if(isset($_POST['register'])) {
     if(!$error) {    
         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
         
-        $statement = $pdo->prepare("INSERT INTO user_login (surname, lastname, username, email, `password`) VALUES (:surname, :lastname, :username, :email, :`password`)");
+        $statement = $conn->prepare("INSERT INTO user_login (surname, lastname, username, email, `password`) VALUES (:surname, :lastname, :username, :email, :`password`)");
         $result = $statement->execute(array('email' => $email, 'passwort' => $password_hash));
         
         if($result) {        
