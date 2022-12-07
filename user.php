@@ -66,26 +66,9 @@ if(isset($_POST['register'])) {
     } 
 }
  
-if($showFormular) {
-?>
- 
-<form action="?register" method="post">
-E-Mail:<br>
-<input type="email" size="40" maxlength="250" name="email"><br><br>
- 
-Dein Passwort:<br>
-<input type="password" size="40"  maxlength="250" name="passwort"><br>
- 
-Passwort wiederholen:<br>
-<input type="password" size="40" maxlength="250" name="passwort2"><br><br>
- 
-<input type="submit" value="Abschicken">
-</form>
- 
-<?php
-} //Ende von if($showFormular)
 
 ?>
+
  
 </body>
 </html>
