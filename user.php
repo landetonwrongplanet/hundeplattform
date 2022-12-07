@@ -1,16 +1,7 @@
 
 <?php 
 
-session_start();
-
-$db_user = "bsfhM151";
-$pass = "151Mhfsb";
-$host = "localhost";
-$db = "hunde";
-
-$conn = mysqli_connect($host, $db_user, $pass, $db) or die("A connection could not be established.");
-
-
+include('config/config.php');
 
 if(isset($_POST['register'])) {
 
@@ -93,6 +84,7 @@ Passwort wiederholen:<br>
  
 <?php
 } //Ende von if($showFormular)
+
 ?>
  
 </body>
