@@ -93,8 +93,12 @@
 					echo "<td>" .($row['verwendung_sozial'] ? 'true' : 'false') ."</td>";
 					echo "<td>" .utf8_encode(substr($row['geschichte'], 0, 50)) .(strlen($row['geschichte']) > 50 ? '...' : '') ."</td>";
 					echo "<td>" .utf8_encode(substr($row['zu_achten_auf'],0 , 50)) .(strlen($row['zu_achten_auf']) > 50 ? '...' : '') ."</td>";
-					#TODO: display image
-					echo "<td>" /*.$row['bild']*/ ."</td>";
+				
+					echo "<td>";
+					if ($row['bild'] != null) {
+						echo "<img style='max-width:100px; max-height: 100px;' src='data:image/*; base64," .base64_encode($row['bild']). "'/>";
+					}
+					
 					echo "</tr>";
 				}
 			?>
