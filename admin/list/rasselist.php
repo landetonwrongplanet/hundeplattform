@@ -42,13 +42,15 @@
 
     <div class="button-layout">
 		<form style="margin:0; padding:0" action="../form/rasseform.php" method="post">
-			<input type="hidden" name="selected-id" id="selected-id">
-			<button type="submit" name="add" id="add" class="button btn-primary">Hinzufügen</button>
-			<button type="submit" name="edit" id="edit" class="button">Bearbeiten</button>
+			<button type="submit" id="add" class="button btn-primary">Hinzufügen</button>
+		</form>
+		<form style="margin:0; padding:0" action="../form/rasseform.php" method="get">
+			<input type="hidden" name="id" id="selected-id">
+			<button type="submit" id="edit" class="button">Bearbeiten</button>
 		</form>
 		<form id="deleteForm" style="margin:0; padding:0" method="post">
 			<input type="hidden" name="delete-id" id="delete-id">
-			<button type="submit" name="delete" id="delete" class="button btn-delete">Löschen</button>
+			<button type="submit" name="delete" id="delete" class="button btn-delete" onClick="return confirm('Sind Sie sicher, dass Sie löschen möchten ?')?this.form.action='<?php echo $_SERVER['PHP_SELF'] ?>':false;">Löschen</button>
 		</form>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>
@@ -58,6 +60,7 @@
             <tr>
                 <th style="width:0"></th>
                 <th style="width:0">Id</th>
+				<th>Bild</th>
                 <th>Bezeichnung</th>
                 <th>Gruppe</th>
                 <th>Lebenserwartung</th>
@@ -70,7 +73,6 @@
                 <th>Sozial</th>
                 <th>Geschichte</th>
                 <th>Zu achten auf</th>
-                <th>Bild</th>
             </tr>
             <?php
 				$query = "SELECT rasse.*, gruppe.bezeichnung as grp_bez FROM rasse LEFT JOIN gruppe on rasse.gruppe_id = gruppe.id";
@@ -81,6 +83,11 @@
 					echo "<tr onclick='select(" .$row['id'] .")'>";
 					echo "<td><input style='margin:0' type='radio' id='" .$row['id'] ."' name='entry'></td>";
 					echo "<td>" .$row['id'] ."</td>";
+					echo "<td>";
+					if ($row['bild'] != null) {
+						echo "<img style='max-width:100px; max-height: 100px;' src='../../image-view.php?rasse_id=" .$row['id'] ."'>";
+					}
+					echo "</td>";
 					echo "<td>" .utf8_encode($row['bezeichnung']) ."</td>";
 					echo "<td>" .$row['grp_bez'] ."</td>";
 					echo "<td>" .$row['lebenserwartung'] ."</td>";
@@ -93,12 +100,6 @@
 					echo "<td>" .($row['verwendung_sozial'] ? 'true' : 'false') ."</td>";
 					echo "<td>" .utf8_encode(substr($row['geschichte'], 0, 50)) .(strlen($row['geschichte']) > 50 ? '...' : '') ."</td>";
 					echo "<td>" .utf8_encode(substr($row['zu_achten_auf'],0 , 50)) .(strlen($row['zu_achten_auf']) > 50 ? '...' : '') ."</td>";
-				
-					echo "<td>";
-					if ($row['bild'] != null) {
-						echo "<img style='max-width:100px; max-height: 100px;' src='data:image/*; base64," .base64_encode($row['bild']). "'/>";
-					}
-					echo "</td>";
 					echo "</tr>";
 				}
 			?>

@@ -15,13 +15,14 @@
 	$gruppe = null;
 	$geschichte = null;
 	$zu_achten_auf = null;
+	$bild = null;
 	$charakter[] = null; 
 	$farbe[] = null;
 	$fell[] = null;
 	
-	if (isset($_POST['edit']) && isset($_POST['selected-id'])) {
+	if (isset($_GET['id'])) {
 		//set form data
-		$id = $_POST['selected-id'];
+		$id = $_GET['id'];
 		
 		$query = $conn->prepare("SELECT * FROM rasse where id = ?");
 		$query->bind_param('i', $id);
@@ -41,6 +42,7 @@
 		$gruppe = $entry['gruppe_id'];
 		$geschichte = $entry['geschichte'];
 		$zu_achten_auf = $entry['zu_achten_auf'];
+		$bild = $entry['bild'];
 	
 		$char_query = $conn->prepare("SELECT * FROM rasse_charakter where rasse_id = ?");
 		$char_query->bind_param('i', $id);
@@ -90,6 +92,8 @@
 		
 		if ($_POST['id'] == null) {
 			//create new entry
+			$stmt = null;
+			
 			$stmt = $conn->prepare('INSERT INTO rasse(bezeichnung, lebenserwartung, minimal_gewicht, maximal_gewicht, minimal_widerrist, maximal_widerrist, herkunft, verwendung_arbeit, verwendung_sozial, gruppe_id, geschichte, zu_achten_auf, bild) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)');
 			$stmt->bind_param('siiiiisiiisss', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $bild);
 			
@@ -101,9 +105,14 @@
 		} else {
 			//update entry
 			$id = $_POST['id'];
-		
-			$stmt = $conn->prepare('UPDATE rasse SET bezeichnung = ?, lebenserwartung = ?, minimal_gewicht = ?, maximal_gewicht = ?, minimal_widerrist = ?, maximal_widerrist = ?, herkunft = ?, verwendung_arbeit = ?, verwendung_sozial = ?, gruppe_id = ?, geschichte = ?, zu_achten_auf = ?, bild = ? WHERE id = ?');
-			$stmt->bind_param('siiiiisiiisssi', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $bild, $id);
+			$stmt = null;
+			if ($bild != null || isset($_POST['bild-delete'])) {
+				$stmt = $conn->prepare('UPDATE rasse SET bezeichnung = ?, lebenserwartung = ?, minimal_gewicht = ?, maximal_gewicht = ?, minimal_widerrist = ?, maximal_widerrist = ?, herkunft = ?, verwendung_arbeit = ?, verwendung_sozial = ?, gruppe_id = ?, geschichte = ?, zu_achten_auf = ?, bild = ? WHERE id = ?');
+				$stmt->bind_param('siiiiisiiisssi', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $bild, $id);
+			} else {
+					$stmt = $conn->prepare('UPDATE rasse SET bezeichnung = ?, lebenserwartung = ?, minimal_gewicht = ?, maximal_gewicht = ?, minimal_widerrist = ?, maximal_widerrist = ?, herkunft = ?, verwendung_arbeit = ?, verwendung_sozial = ?, gruppe_id = ?, geschichte = ?, zu_achten_auf = ? WHERE id = ?');
+				$stmt->bind_param('siiiiisiiissi', $bezeichnung, $lebenserwartung, $min_gewicht, $max_gewicht, $min_widerrist, $max_widerrist, $herkunft, $arbeit, $sozial, $gruppe, $geschichte, $zu_achten_auf, $id);
+			}
 			$stmt->execute();
 			$stmt->close();
 			
@@ -235,6 +244,8 @@
         <textarea rows="2" name="zu-achten-auf" form="rasse-form"><?php echo utf8_encode($zu_achten_auf); ?></textarea><br>
         <label for="bild">Bild</label><br>
         <input type="file" name="bild" id="bild"><br>
+		<label for="bild-delete">Aktuelles Bild löschen</label>
+		<input type="checkbox" name="bild-delete" id="bild-delete"><br>
         <label for="gruppe">Gruppe</label><br>
         <select name="gruppe" id="gruppe">
 			<?php

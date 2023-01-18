@@ -84,6 +84,10 @@ input[type=file] {
 input[type=checkbox] {
     width: inherit;
 }
+input[type=submit] {
+	white-space: normal;
+	cursor: pointer;
+}
 .custom-input-layout {
     width: 100%;
     display: flex;

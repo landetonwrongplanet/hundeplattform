@@ -6,9 +6,9 @@
 	$gruppennummer = null;
 	$bezeichnung = null;
 	
-	if (isset($_POST['edit']) && isset($_POST['selected-id'])) {
+	if (isset($_GET['id'])) {
 		//set form data
-		$id = $_POST['selected-id'];
+		$id = $_GET['id'];
 		
 		$query = $conn->prepare("SELECT * FROM gruppe where id = ?");
 		$query->bind_param('i', $id);

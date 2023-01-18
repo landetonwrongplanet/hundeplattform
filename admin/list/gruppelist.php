@@ -34,13 +34,15 @@
 
    <div class="button-layout">
 		<form style="margin:0; padding:0" action="../form/gruppeform.php" method="post">
-			<input type="hidden" name="selected-id" id="selected-id">
-			<button type="submit" name="add" id="add" class="button btn-primary">Hinzufügen</button>
-			<button type="submit" name="edit" id="edit" class="button">Bearbeiten</button>
+			<button type="submit" id="add" class="button btn-primary">Hinzufügen</button>
+		</form>
+		<form style="margin:0; padding:0" action="../form/gruppeform.php" method="get">
+			<input type="hidden" name="id" id="selected-id">
+			<button type="submit" id="edit" class="button">Bearbeiten</button>
 		</form>
 		<form id="deleteForm" style="margin:0; padding:0" method="post">
 			<input type="hidden" name="delete-id" id="delete-id">
-			<button type="submit" name="delete" id="delete" class="button btn-delete">Löschen</button>
+			<button type="submit" name="delete" id="delete" class="button btn-delete" onClick="return confirm('Sind Sie sicher, dass Sie löschen möchten ?')?this.form.action='<?php echo $_SERVER['PHP_SELF'] ?>':false;">Löschen</button>
 		</form>
         <a href="../dashboard.html"><button type="button" class="button">Zurück</button></a>
     </div>

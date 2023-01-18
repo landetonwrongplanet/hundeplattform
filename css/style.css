@@ -1,0 +1,49 @@
+*{
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+table {
+    width: 100%;
+    margin: auto;
+}
+table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px 10px;
+}
+th {
+    background-color: lightgrey;
+	text-align:left;
+}
+
+.title {
+	text-align:center;
+}
+
+.search-form {
+	text-align:center;
+}
+
+.result-table {
+	margin-top: 20px;
+}
+.rasse-card {
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+	align-items: center;
+}
+.card-image {
+	min-width: 300px;
+	max-width: 400px;
+	width: 40vw;
+    padding: 0 20px; 
+}
+.rasse-label {
+	font-weight:bold;
+}
+.rasse-info {
+	padding: 1vw;
+}
