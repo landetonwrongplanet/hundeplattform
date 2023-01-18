@@ -1,16 +1,48 @@
+
 <?php 
-session_start();
-$pdo = new PDO('', '', '');
+
+
+$hostname = "localhost";
+$username = "bsfh";
+$password = "151Mhfsb";
+$db = "hunde";
+
+
+$dbconnect=mysqli_connect($hostname,$username,$password,$db);
+
+if ($dbconnect->connect_error) {
+  die("Database connection failed: " . $dbconnect->connect_error);
+}
+
+//include('config/config.php');
+
+if(isset($_POST['submit'])) {
+    $name=$_POST['vorname'];
+    $surname=$_POST['nachname'];
+    
+    $query = "INSERT INTO test (vorname, nachname)
+    VALUES ('$name', '$surname')";
+
+
+if (!mysqli_query($dbconnect, $query)) {
+    die('An error occurred when submitting your review.');
+} else {
+  echo "Thanks for your review.";
+}
+
+}
 ?>
- 
+
+
+
 <?php
- 
+/*
 if(isset($_POST['register'])) {
 
     $error = false;
     $surname = $_POST['surname'];
     $lastname = $_POST['lastname'];
-    $username = $_POST['lastname'];
+    $username = $_POST['username'];
     $email = $_POST['email'];
     $password1 = $_POST['password1'];
     $password2 = $_POST['password2'];
@@ -43,7 +75,7 @@ if(isset($_POST['register'])) {
     
     //Überprüfe, dass die E-Mail-Adresse noch nicht registriert wurde
     if(!$error) { 
-        $statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $statement = $conn->prepare("SELECT * FROM user_login WHERE email = $email");
         $result = $statement->execute(array('email' => $email));
         $user = $statement->fetch();
         
@@ -55,39 +87,21 @@ if(isset($_POST['register'])) {
     
     //Keine Fehler, wir können den Nutzer registrieren
     if(!$error) {    
-        $password_hash = password_hash($password1, PASSWORD_DEFAULT);
+        $password1 = password_hash($password1, PASSWORD_DEFAULT);
         
-        $statement = $pdo->prepare("INSERT INTO users (email, passwort) VALUES (:email, :passwort)");
-        $result = $statement->execute(array('email' => $email, 'passwort' => $password_hash));
+        $statement = $conn->prepare("INSERT INTO user_login (surname, lastname, username, email, `password`) VALUES ('$surname', '$lastname', '$username', '$email', '$password1')");
+        $result = $statement->execute(array('email' => $email, 'password1' => $password1));
         
         if($result) {        
-            echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
-            $showFormular = false;
+            echo 'Du wurdest erfolgreich registriert.Nun kannst du dich einloggen';
         } else {
             echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
         }
     } 
-}
- 
-if($showFormular) {
+}*/
+
 ?>
- 
-<form action="?register=1" method="post">
-E-Mail:<br>
-<input type="email" size="40" maxlength="250" name="email"><br><br>
- 
-Dein Passwort:<br>
-<input type="password" size="40"  maxlength="250" name="passwort"><br>
- 
-Passwort wiederholen:<br>
-<input type="password" size="40" maxlength="250" name="passwort2"><br><br>
- 
-<input type="submit" value="Abschicken">
-</form>
- 
-<?php
-} //Ende von if($showFormular)
-?>
+
  
 </body>
 </html>

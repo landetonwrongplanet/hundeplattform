@@ -1,7 +1,6 @@
 <?php
-/* session_start();
-$pdo = new PDO();
-*/
+session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -23,7 +22,7 @@ $pdo = new PDO();
         <div data-role="main" class="ui-content">
           <p>Registration</p>
           <form data-ajax="false" id="loginformular" method="post"
-              action="/user.php">
+              action="user.php">
               <div data-role="fieldcontain">
                 <fieldset>
                   <label for="surname">Vorname</label>
@@ -35,9 +34,9 @@ $pdo = new PDO();
                   <label for="email">E-Mail</label>
                   <input type="email" name="email" id="email" focus><br>
                   <label for="password">Kennwort</label>
-                  <input type="password1" name="password1" id="password1"><br>
+                  <input type="password" name="password1" id="password1"><br>
                   <label for="password2">Kennwort wiederholen</label>
-                  <input type="password2" name="password2" id="password2"><br>
+                  <input type="password" name="password2" id="password2"><br>
                   <input type="submit" value="register">
                 </fieldset>
               </div>
@@ -48,7 +47,7 @@ $pdo = new PDO();
         <div data-role="main">
           <p>Login</p>
           <form data-ajax="false" id="loginformular" method="post"
-              action="index.php#login">
+              action="user.php">
               <div data-role="fieldcontain">
                 <fieldset>
                   <label for="username">Benutzername</label>
@@ -71,6 +70,11 @@ $pdo = new PDO();
         Sie können zu Hunderassen nachlesen, 
         Bilder zu den jeweiligen Rassen ansehen und sich via Quiz die passende Rasse heraussuchen.
       </p>
+      <form action="user.php" method="post">
+        <input type="text" name="vorname">
+        <input type="text" name="nachname">
+        <input type="submit" value="register" name="submit">
+      </form>
     </div>
 </div>
 <div class="footer">
