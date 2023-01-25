@@ -33,7 +33,7 @@ session_start();
                         <input type="password" name="password1" id="password1"><br>
                         <label for="password2">Kennwort wiederholen</label><br>
                         <input type="password" name="password2" id="password2"><br>
-                        <input type="submit" value="register">
+                        <input type="submit" value="register" name="submit" class="button">
                 </form>
             </div>
             <div class="login">
@@ -43,7 +43,7 @@ session_start();
                   <input type="text" name="vorname"><br>
                   <label for="lastname">Nachname</label><br>
                   <input type="text" name="nachname"><br>
-                  <input type="submit" value="login" name="submit">
+                  <input type="submit" value="login" name="submit" class="button" >
                 </form>
             </div>
           </div>

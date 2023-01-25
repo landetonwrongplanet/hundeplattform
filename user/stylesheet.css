@@ -56,7 +56,16 @@ ul {
     margin-right: auto;
     margin-left: auto;
 }
+input{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
+.button{
+    border-radius: 50%;
+    font-size: 13px;
+    margin-top: 10px;
+}
 .landingtext{
     width: 600px;
     margin: 25px;
