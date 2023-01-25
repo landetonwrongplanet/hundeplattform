@@ -20,19 +20,17 @@ session_start();
             <div class="forms">
               <div class="registration">
               <p>Registration</p>
-                <form class="loginformular" method="post"action="user.php">
+                <form  method="post" action="user.php">
                         <label for="surname">Vorname</label><br>
-                        <input type="text" name="surname" id="s-name" focus><br>
+                        <input type="text" name="surname" ><br>
                         <label for="lastname">Nachname</label><br>
-                        <input type="text" name="lastname" id="l-name" focus><br>
+                        <input type="text" name="lastname" ><br>
                         <label for="username">Benutzername</label><br>
-                        <input type="text" name="username" id="username" focus><br>
+                        <input type="text" name="username" ><br>
                         <label for="email">E-Mail</label><br>
-                        <input type="email" name="email" id="email" focus><br>
+                        <input type="email" name="email" ><br>
                         <label for="password">Kennwort</label><br>
-                        <input type="password" name="password1" id="password1"><br>
-                        <label for="password2">Kennwort wiederholen</label><br>
-                        <input type="password" name="password2" id="password2"><br>
+                        <input type="password" name="password1" ><br>
                         <input type="submit" value="register" name="submit" class="button">
                 </form>
             </div>

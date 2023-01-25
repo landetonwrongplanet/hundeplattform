@@ -14,14 +14,16 @@ if ($dbconnect->connect_error) {
   die("Database connection failed: " . $dbconnect->connect_error);
 }
 
-//include('config/config.php');
 
 if(isset($_POST['submit'])) {
-    $name=$_POST['vorname'];
-    $surname=$_POST['nachname'];
+    $name=$_POST['surname'];
+    $surname=$_POST['lastname'];
+    $username=$_POST['username'];
+    $email=$_POST['email'];
+    $password=$_POST['password1']
     
-    $query = "INSERT INTO test (vorname, nachname)
-    VALUES ('$name', '$surname')";
+    $query = "INSERT INTO test (vorname, nachname, benutzername, email, passwort)
+    VALUES ('$name', '$surname', '$username', '$email', '$password')";
 
 
 if (!mysqli_query($dbconnect, $query)) {
