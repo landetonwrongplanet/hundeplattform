@@ -31,7 +31,7 @@ session_start();
                         <input type="email" name="email" ><br>
                         <label for="password">Kennwort</label><br>
                         <input type="password" name="password1" ><br>
-                        <input type="submit" value="register" name="submit" class="button">
+                        <input type="submit" value="register" name="submitregistration" class="button">
                 </form>
             </div>
             <div class="login">

@@ -15,7 +15,7 @@ if ($dbconnect->connect_error) {
 }
 
 
-if(isset($_POST['submit'])) {
+if(isset($_POST['submitregistration'])) {
     $name=$_POST['surname'];
     $surname=$_POST['lastname'];
     $username=$_POST['username'];
